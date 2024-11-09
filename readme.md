@@ -18,6 +18,8 @@ For STM32-based systems, register the hardware-specific functions to initialize 
 
 ```c
 // Example SPI and GPIO handles for STM32
+#include <wizchip.h>
+
 SPI_HandleTypeDef hspi1;
 
 int main()
@@ -34,5 +36,24 @@ int main()
         GPIO_PIN_xx,                   // GPIO pin for CS
         HAL_GPIO_WritePin              // GPIO write function
     );
+
+    // You can w5500 socket from here!
 }
+
+// DMA transaction complete callbacks
+// interrupt must be enabled by default
+
+#if USE_HAL_SPI_REGISTER_CALLBACKS == 0
+
+void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+    wizchip_dma_rx_cplt((void*) hspi);
+}
+
+void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+    wizchip_dma_tx_cplt((void*) hspi);
+}
+
+#endif
 ```
