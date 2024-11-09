@@ -9,7 +9,21 @@ This library provides SPI communication support for the WIZnet Ethernet chip suc
 ```cmake
 set(WIZ_CHIP "W5500")  # You may use other chips listed on ioLibrary_Driver
 #set(WIZ_COMPILE_OPTIONS ...) # Auxiliary options for library compilation
-add_subdirectory(path/to/w5500-cmake)
+
+FetchContent_Declare(
+  wizchip
+  GIT_REPOSITORY https://github.com/donghoonpark/wizchip-cmake
+  GIT_SHALLOW TRUE
+)
+
+FetchContent_GetProperties(wizchip)
+if(NOT wizchip_POPULATED)
+    message(STATUS "Fetching wizchip...")
+    FetchContent_MakeAvailable(wizchip)
+else()
+    message(STATUS "wizchip already populated")
+endif()
+
 target_link_libraries(your_project_target wizchip)
 ```
 
