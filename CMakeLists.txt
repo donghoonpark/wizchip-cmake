@@ -10,11 +10,27 @@ if(NOT DEFINED WIZ_CHIP)
     set(WIZ_CHIP "W5500")
 endif()
 
+include(FetchContent)
 message("${WIZ_CHIP} ioLibrary Configuration")
 
-set(DRIVER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Driver)
-
 string(TOLOWER "${WIZ_CHIP}" WIZ_CHIP_LOWER)
+
+FetchContent_Declare(
+  ioLibrary_Driver
+  GIT_REPOSITORY https://github.com/Wiznet/ioLibrary_Driver
+  GIT_TAG b981401e7f3d07015619adf44c13998e13e777f9
+  GIT_SHALLOW TRUE
+)
+
+FetchContent_GetProperties(iolibrary_driver)
+if(NOT iolibrary_driver_POPULATED)
+    message(STATUS "Fetching ioLibrary_Driver...")
+    FetchContent_MakeAvailable(ioLibrary_Driver)
+else()
+    message(STATUS "ioLibrary_Driver already populated")
+endif()
+
+set(DRIVER_DIR ${iolibrary_driver_SOURCE_DIR})
 
 set(DRIVER_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/wizchip_port.c
@@ -29,8 +45,6 @@ set(DRIVER_INC
     ${DRIVER_DIR}/Ethernet
     ${DRIVER_DIR}/Application/loopback
 )
-
-message(${DRIVER_DIR}/${WIZ_CHIP}/${WIZ_CHIP_LOWER}.c)
 
 add_library(wizchip ${DRIVER_SRC})
 target_include_directories(wizchip PUBLIC ${DRIVER_INC})
