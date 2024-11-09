@@ -8,6 +8,7 @@ This library provides SPI communication support for the WIZnet Ethernet chip suc
 
 ```cmake
 set(WIZ_CHIP "W5500")  # You may use other chips listed on ioLibrary_Driver but it is not yet been tested
+#set(WIZ_COMPILE_OPTIONS ...) # Auxiliary options for library compilation
 add_subdirectory(path/to/w5500-cmake)
 target_link_libraries(your_project_target wizchip)
 ```
