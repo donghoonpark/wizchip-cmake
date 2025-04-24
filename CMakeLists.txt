@@ -18,7 +18,7 @@ string(TOLOWER "${WIZ_CHIP}" WIZ_CHIP_LOWER)
 FetchContent_Declare(
   ioLibrary_Driver
   GIT_REPOSITORY https://github.com/Wiznet/ioLibrary_Driver
-  GIT_TAG master
+  GIT_TAG v3.2.0
   GIT_SHALLOW TRUE
 )
 
