@@ -50,7 +50,7 @@ void wizchip_register_hal(
     hal_spi_receive_dma  = _hal_spi_receive_dma;
     hal_spi_transmit_dma = _hal_spi_transmit_dma;
 
-    if( _cs_gpio_pin == NULL || _hal_gpio_write_pin == NULL)
+    if( _cs_gpiox == NULL || _hal_gpio_write_pin == NULL)
     {
         // Assume hardware NSS select
         reg_wizchip_cs_cbfunc(NULL, NULL);
@@ -117,12 +117,12 @@ static void hal_spi_writebyte(uint8_t wb)
     hal_spi_transmit(hspi, &wb, 1, 1);
 }
 
-void hal_spi_cs_sel(void)
+static void hal_spi_cs_sel(void)
 {
     hal_gpio_write_pin(cs_gpiox, cs_gpio_pin, __RESET);
 }
 
-void hal_spi_cs_desel(void)
+static void hal_spi_cs_desel(void)
 {
     hal_gpio_write_pin(cs_gpiox, cs_gpio_pin, __SET);
 }
