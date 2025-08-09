@@ -1,5 +1,5 @@
-#ifndef WIZCHIP_PORT_H
-#define WIZCHIP_PORTH_H
+#ifndef WIZCHIP_PORT_H_
+#define WIZCHIP_PORT_H_
 
 #include <stdint.h>
 
